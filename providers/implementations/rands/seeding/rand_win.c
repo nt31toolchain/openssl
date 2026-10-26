@@ -13,7 +13,9 @@
 #include "crypto/rand.h"
 #include "prov/seeding.h"
 
-#if defined(OPENSSL_SYS_WINDOWS) || defined(OPENSSL_SYS_WIN32)
+/* Windows NT 3.x has no system random generator; see rand_nt31.c. */
+#if (defined(OPENSSL_SYS_WINDOWS) || defined(OPENSSL_SYS_WIN32)) \
+    && !defined(OPENSSL_RAND_SEED_NT31)
 
 #ifndef OPENSSL_RAND_SEED_OS
 #error "Unsupported seeding method configured; must be os"
